@@ -83,8 +83,11 @@ clauses
 %Как зовут сына?
 	son(X,Y):-man(X),child(X,Y).
 	s:-son(X,Y),write(X," is son ",Y),nl,fail.
+%Имя внучки
+	granddaughter(X,Y):-child(G, X),child(H,G),woman(H), X=H.
+	gd:-granddaughter(X,Y),write(Y," is granddaughter ",X),nl,fail.
 %Находим брата
-	brother(X,Y):-parent(G,X),parent(G,Y), man(X), X=Y.
+	brother(X,Y):-parent(G,X),parent(G,Y),man(X), X<>Y.
 	b:-brother(X,Y),write(X," is brother ",Y),nl,fail.
 %Кто Дядя?
 	uncle(X,Y):-child(X,G),brother(G,H),man(H), Y=H.
