@@ -31,8 +31,8 @@ clauses
 	man("vladimirF").
 	man("vladimirM").
 	man("alexander").
-	man("dmitry")
-	man("georgy")
+	man("dmitry").
+	man("georgy").
 %женщины
 	woman("olga").
 	woman("zinaida").
@@ -83,15 +83,15 @@ clauses
 %Как зовут сына?
 	son(X,Y):-man(X),child(X,Y).
 	s:-son(X,Y),write(X," is son ",Y),nl,fail.
-%Имя внучки
-	granddaughter(X,Y):-child(G, X),child(H,G),woman(H), X=H.
-	gd:-granddaughter(X,Y),write(Y," is granddaughter ",X),nl,fail.
 %Находим брата
-	brother(X,Y):-parent(G,X),parent(G,Y),man(X),X<>Y.
+	brother(X,Y):-parent(G,X),parent(G,Y), man(X), X=Y.
 	b:-brother(X,Y),write(X," is brother ",Y),nl,fail.
-%Дядя?
-	uncle(X,Y):-married(Y,G),mother(H,G),X=H.
-	wm:-wifes_mother(X,Y),write(X," is wifes_mother ",Y),nl,fail.
-%Ищем зятя
-	husband_of_daughter(X,Y):-daughter(G,Y),married(H,G),X=H.
-	h:-husband_of_daughter(X,Y),write(X," is husband_of_daughter ",Y),nl,fail.
+%Кто Дядя?
+	uncle(X,Y):-child(X,G),brother(G,H),man(H), Y=H.
+	u:-uncle(X,Y),write(Y," is uncle ",X),nl,fail.
+%Свекровь
+	husbands_mother(X,Y):-married(X,G),parent(H,G), woman(H), Y=H.
+	hm:-husbands_mother(X,Y),write(Y," is husband mother ",X),nl,fail.
+%Ищем невестку
+	wife_of_brother(X,Y):-brother(G,Y),married(H,G), X=H.
+	h:-wife_of_brother(X,Y),write(X," is wife_of_brother ",Y),nl,fail.
